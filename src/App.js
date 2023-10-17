@@ -15,6 +15,7 @@ export default function App(){
 
     const [tenzies, setTenzies] = useState(false)
     const [dice, setDice] = useState(allNewDice)
+    const [userRolls, setUserRolls] = useState(0)
 
 
     useEffect(() =>{
@@ -60,9 +61,12 @@ export default function App(){
                    die.isHeld ? die : generateNewDie()
                     ))   
                 )
-            )} else {
+            )
+            setUserRolls(oldNumber => oldNumber += 1)
+        } else {
                 setTenzies(false)
                 setDice(allNewDice())
+                setUserRolls(0)
             }
         
     }
@@ -94,15 +98,18 @@ export default function App(){
 
      
     return(
-        <main className="flex">
-                {tenzies && <Confetti />}
-                <h1 className="title">TENZIES</h1>
-                <p  className="instructions">
-                    {tenzies ? "You won!" : "Roll until all dice are the same. Click each die to freeze it at its current value between points"}</p>
-            <div className="dice-container"> 
-                {diceElements}
-            </div>
-            <button onClick={rollDice} className="button flex">{tenzies ? "New Game!" : "ROLL"}</button>
-        </main>
+        <div className="App">
+            <main className="main flex">
+                    {tenzies && <Confetti />}
+                    <h1 className="title">TENZIES</h1>
+                    <p  className="instructions">
+                        {tenzies ? "You won!" : "Roll until all dice are the same. Click each die to freeze it at its current value between points"}</p>
+                <div className="dice-container"> 
+                    {diceElements}
+                </div>
+                <button onClick={rollDice} className="button flex">{tenzies ? "New Game!" : "ROLL"}</button>
+                <div>Number of rolls: <span className="rollsNumber">{userRolls}</span></div>
+            </main>
+        </div>
         )
 }
