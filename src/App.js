@@ -71,7 +71,7 @@ export default function App(){
         
     }
 
-    function holdDice(id){
+    const holdDice = (id) => () => {
         setDice(oldDice => oldDice.map(die => {
             // return if die's id matches with the paramter passed from the Die component's handleClick anomymous function 
             return die.id === id ? 
@@ -87,7 +87,7 @@ export default function App(){
     const diceElements = dice.map((die) => (
         <Die 
             id={die.id}
-            handleClick={() => holdDice(die.id)}
+            handleClick={holdDice(die.id)}
             key={die.id} 
             value={die.value}
             isHeld={die.isHeld}
